@@ -4,14 +4,21 @@ import React, { Component } from 'react'
 import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 
-class App extends Component {
+// material ui
+import { ThemeProvider } from "@material-ui/styles"
+import { createMuiTheme } from "@material-ui/core"
+import Typography from '@material-ui/core/Typography';
+
+const theme = createMuiTheme()
+
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <h1>My React App!</h1>
+        <ThemeProvider theme={theme}>
+          <Typography variant="h1" component="h2">My React App!</Typography>
+        </ThemeProvider>
       </Provider>
     )
   }
 }
-
-export default App
