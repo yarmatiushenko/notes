@@ -29,6 +29,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "babel-eslint": "^10.1.0",
     "eslint-config-airbnb": "^16.0.0",
     "eslint-loader": "^2.0.0",
