@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "babel-eslint": "^10.1.0",
     "eslint-config-airbnb": "^16.0.0",
     "eslint-loader": "^2.0.0",
