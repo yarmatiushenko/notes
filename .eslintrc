@@ -1,5 +1,11 @@
 {
-  "extends": ["airbnb", "prettier"],
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "cypress/globals": true
+  },
   "rules": {
     "arrow-body-style": 0,
     "camelcase": 0,
@@ -80,7 +86,6 @@
   },
   "plugins": [
     "react",
-    "prettier",
     "import",
     "cypress"
   ],
@@ -103,9 +108,5 @@
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true,
     "webpackIsomorphicTools": true
-  },
-  "env": {
-    "browser": true,
-    "node": true
   }
 }
