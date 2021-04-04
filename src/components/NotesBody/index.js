@@ -2,7 +2,11 @@ import React from 'react'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
+
+// components
 import FolderComponent from '../FolderComponent'
+import NoteComponent from '../NoteComponent'
+import NoteDescription from '../NoteComponent/NoteDescription'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,10 +23,13 @@ const useStyles = makeStyles(() => ({
   notesList: {
     width: '300px',
     backgroundColor: '#cfe8fc'
+  },
+  notesDescription: {
+    flexGrow: 1
   }
 }))
 
-export default function NotesBody() {
+const NotesBody = () => {
   const classes = useStyles()
 
   return (
@@ -30,8 +37,14 @@ export default function NotesBody() {
       <div className={classes.folderList}>
         <FolderComponent/>
       </div>
-      <div className={classes.notesList} />
-      <div className={classes.notesDescription} />
+      <div className={classes.notesList}>
+        <NoteComponent/>
+      </div>
+      <div className={classes.notesDescription}>
+        <NoteDescription/>
+      </div>
     </div>
   )
 }
+
+export default NotesBody
