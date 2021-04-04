@@ -30,24 +30,29 @@ export const notes = produce((draft, action) => {
       draft.folders.byId[action.id] = action.payload
       draft.folders.allIds.push(action.id)
       break
+
     case CREATE_NOTE:
       draft.notes.byId[action.id] = action.payload
       draft.notes.allIds.push(action.id)
       draft.folders.byId[action.folderId].notes.push(action.id)
       break
+
     case SET_ACTIVE_ITEM:
       draft[action.entity] = action.id
       break
+
     case DELETE_NOTE:
       if (action.id === draft.activeNote) {
         draft.activeNote = ''
       }
       draft.folders.byId[action.folderId].notes.splice(action.folderNoteIndex, 1)
       delete draft.notes.byId[action.id]
-      return draft
+      break
+
     case RENAME_ITEM:
       draft[action.entity].byId[action.id].name = action.value
-      return draft
+      break
+
     case DELETE_FOLDER:
       const index = draft.folders.allIds.findIndex(item => item === action.id)
       const { notes } = draft.folders.byId[action.id]
@@ -65,12 +70,11 @@ export const notes = produce((draft, action) => {
       // delete folder
       draft.folders.allIds.splice(index, 1)
       delete draft.folders.byId[action.id]
-
-      return draft
+      break
 
     case CHANGE_DESCRIPTION:
       draft.notes.byId[action.id].description = action.value
-      return draft
+      break
     default:
       return draft
   }
