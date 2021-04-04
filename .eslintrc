@@ -7,6 +7,7 @@
     "cypress/globals": true
   },
   "rules": {
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft"] }],
     "arrow-body-style": 0,
     "camelcase": 0,
     "react/no-multi-comp": 0,

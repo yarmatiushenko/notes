@@ -8,28 +8,37 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
-
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 // redux
 import { connect } from 'react-redux'
-import { createFolder } from '../../redux/reducer'
+import { createFolder, createNote } from '../../redux/reducer'
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
+  iconBtn: {
+    '& svg': {
+      color: '#fff'
+    }
+  }
 }))
 
-function Header({createFolder}) {
+function Header({ createFolder, createNote, activeFolder }) {
   const classes = useStyles()
 
+  const handleCreateNote = () => {
+    console.log('click')
+    createNote(activeFolder)
+  }
   const actions = [
     {
       name: 'Add folder',
       onClick: createFolder,
       icon: <CreateNewFolderIcon/>
+    },
+    {
+      name: 'Add note',
+      onClick: handleCreateNote,
+      disabled: !activeFolder,
+      icon: <NoteAddIcon/>
     }
   ]
 
@@ -40,8 +49,9 @@ function Header({createFolder}) {
         {actions.map(item => (
           <IconButton
             key={item.name}
-            color="secondary"
+            disabled={item.disabled}
             onClick={item.onClick}
+            className={classes.iconBtn}
           >
             {item.icon}
           </IconButton>
@@ -52,7 +62,12 @@ function Header({createFolder}) {
 }
 
 Header.propTypes = {
+  activeFolder: PropTypes.string,
   createFolder: PropTypes.func.isRequired
 }
 
-export default connect(null, {createFolder})(Header)
+const mapStateToProps = (store) => ({
+  activeFolder: store.activeFolder
+})
+
+export default connect(mapStateToProps, { createFolder, createNote })(Header)

@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function ListItemName({ isEdit, initialValue, onChange, onBlur }) {
+function ListItemName({ isEdit, initialValue, onChange, onBlur, ...rest }) {
   const classes = useStyles()
 
   if (isEdit) {
@@ -37,7 +37,7 @@ function ListItemName({ isEdit, initialValue, onChange, onBlur }) {
   }
 
   return (
-    <ListItemText primary={initialValue}/>
+    <ListItemText primary={initialValue} {...rest}/>
   )
 }
 

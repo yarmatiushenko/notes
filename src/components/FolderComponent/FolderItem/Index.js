@@ -7,7 +7,7 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 
 // redux
 import { connect } from 'react-redux'
-import { editItem, deleteItem, renameItem, setActiveItem } from '../../../redux/reducer'
+import { deleteItem, renameItem, setActiveItem } from '../../../redux/reducer'
 
 // components
 import ListItemComponent from '../../ListItemComponent'
@@ -18,32 +18,30 @@ const useStyles = makeStyles(() => ({
     borderRadius: 6,
     cursor: 'pointer',
     border: '1px solid #000',
-    backgroundColor: "#fff"
+    backgroundColor: '#fff'
   },
   selected: {
     border: '1px solid transparent',
-    backgroundColor: "#cfe8fc !important"
+    backgroundColor: '#cfe8fc !important'
   }
 }))
 
-function FolderItem({ folder, activeFolder, editItem, deleteItem, renameItem, setActiveItem }) {
+function FolderItem({ folder, activeFolder, deleteItem, renameItem, setActiveItem }) {
   const classes = useStyles()
-  const { id, isEdit, name } = folder
+  const { id, name } = folder
+  const isSelected = activeFolder === id
 
-  const editFolder = () => editItem(id, 'folders')
-  const deleteFolder = () => deleteItem(id, 'folders')
+  const deleteFolder = () => deleteItem(id)
   const renameFolder = (e) => renameItem(id, e.target.value)
   const setActiveFolder = () => setActiveItem(id, 'activeFolder')
 
   return (
     <ListItemComponent
       icon={<FolderOpenIcon/>}
-      handleEditItem={editFolder}
       handleDeleteItem={deleteFolder}
       handleRenameItem={renameFolder}
       setActiveItem={setActiveFolder}
-      selected={activeFolder === id}
-      isEdit={isEdit}
+      selected={isSelected}
       primaryText={name}
       listItemProps={{
         classes: {
@@ -58,14 +56,12 @@ function FolderItem({ folder, activeFolder, editItem, deleteItem, renameItem, se
 FolderItem.propTypes = {
   activeFolder: PropTypes.string,
   folder: PropTypes.object.isRequired,
-  editItem: PropTypes.func.isRequired,
   renameItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   setActiveItem: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
-  editItem,
   deleteItem,
   renameItem,
   setActiveItem

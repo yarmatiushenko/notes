@@ -5,8 +5,8 @@ import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 
 // material ui
-import { ThemeProvider } from "@material-ui/styles"
-import { createMuiTheme } from "@material-ui/core"
+import { ThemeProvider } from '@material-ui/styles'
+import { createMuiTheme } from '@material-ui/core'
 
 // components
 import Header from './Header'

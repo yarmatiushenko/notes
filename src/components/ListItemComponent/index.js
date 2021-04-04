@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 // material-ui
@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close'
 
 // components
 import ListItemName from './ListItemName'
+import { ClickAwayListener } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -31,15 +32,19 @@ const useStyles = makeStyles(() => ({
 }))
 
 const ListItemComponent = (props) => {
-  const { primaryText, icon, isEdit, selected, listItemProps, handleEditItem,
-    handleDeleteItem, handleRenameItem, setActiveItem } = props
+  const { primaryText, icon, selected, listItemProps, handleEditItem,
+    handleDeleteItem, handleRenameItem, setActiveItem, ...rest } = props
+  const [isEdit, setEdit] = useState(false)
+
+  const openEditMode = () => setEdit(true)
+  const closeEditMode = () => setEdit(false)
   const classes = useStyles()
   console.log('render')
   const actions = [
     {
       label: 'Rename',
       icon: <EditIcon/>,
-      onClick: handleEditItem,
+      onClick: openEditMode,
       condition: isEdit
     },
     {
@@ -51,39 +56,42 @@ const ListItemComponent = (props) => {
     {
       label: 'Cancel',
       icon: <CloseIcon/>,
-      onClick: handleEditItem,
+      onClick: closeEditMode,
       condition: !isEdit
     },
   ]
 
   return (
-    <ListItem
-      selected={selected}
-      className={classes.root}
-      onClick={setActiveItem}
-      {...listItemProps}
-    >
-      {icon && (<ListItemIcon className={classes.icon}>{icon}</ListItemIcon>)}
+    <ClickAwayListener onClickAway={closeEditMode}>
+      <ListItem
+        selected={selected}
+        className={classes.root}
+        onClick={setActiveItem}
+        {...listItemProps}
+      >
+        {icon && (<ListItemIcon className={classes.icon}>{icon}</ListItemIcon>)}
 
-      <ListItemName
-        isEdit={isEdit}
-        initialValue={primaryText}
-        onBlur={handleEditItem}
-        onChange={handleRenameItem}
-      />
+        <ListItemName
+          isEdit={isEdit}
+          initialValue={primaryText}
+          onBlur={handleEditItem}
+          onChange={handleRenameItem}
+          {...rest}
+        />
 
-      {actions.map(item => {
-        if (item.condition) return false
-        return (
-          <IconButton
-            key={item.label}
-            className={classes.iconBtn}
-            onClick={item.onClick}
-          >
-            {item.icon}
-          </IconButton>)
-      })}
-    </ListItem>
+        {actions.map(item => {
+          if (item.condition) return false
+          return (
+            <IconButton
+              key={item.label}
+              className={classes.iconBtn}
+              onClick={item.onClick}
+            >
+              {item.icon}
+            </IconButton>)
+        })}
+      </ListItem>
+    </ClickAwayListener>
   )
 }
 
