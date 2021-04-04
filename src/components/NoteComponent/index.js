@@ -4,15 +4,23 @@ import PropTypes from 'prop-types'
 // redux
 import { connect } from 'react-redux'
 
+
 // component
 import NoteItem from './NoteItem'
+import StubComponent from '../StubComponent'
 
-function NoteComponent({ folder }) {
-  if (!folder) return false
+const NoteComponent = ({ folder = {} }) => {
+  const { notes = [] } = folder
+
+  if (notes.length === 0) {
+    return (
+      <StubComponent text="List notes ..."/>
+    )
+  }
 
   return (
     <>
-      {folder.notes.map((item, index) => (<NoteItem key={item} id={item} index={index}/>))}
+      {notes.map((item, index) => (<NoteItem key={item} id={item} index={index}/>))}
     </>
   )
 }
@@ -23,11 +31,9 @@ NoteComponent.propTypes = {
 
 const mapStateToProps = (store) => {
   const { activeFolder } = store
-  const folder = store.folders.byId[activeFolder]
 
   return {
-    folder,
-    activeFolder,
+    folder: store.folders.byId[activeFolder]
   }
 }
 

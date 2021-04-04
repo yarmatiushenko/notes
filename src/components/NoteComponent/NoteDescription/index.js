@@ -9,6 +9,9 @@ import { changeDescription } from '../../../redux/reducer'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
+// components
+import StubComponent from '../../StubComponent'
+
 const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
@@ -20,30 +23,17 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     outline: 'none',
     border: 'none'
-  },
-  subContainer: {
-    position: 'relative',
-    width: '100%',
-    height: '100%'
-  },
-  subText: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
   }
 }))
 
-function NoteDescription({ activeNote, notes, changeDescription }) {
+const NoteDescription = ({ activeNote, notes, changeDescription }) => {
   const [edit, setEdit] = useState(false)
   const note = notes[activeNote]
   const classes = useStyles()
 
   if (!activeNote) {
     return (
-      <div className={classes.subContainer}>
-        <Typography className={classes.subText}>Please, select note</Typography>
-      </div>
+      <StubComponent text="Please, select note" />
     )
   }
 
