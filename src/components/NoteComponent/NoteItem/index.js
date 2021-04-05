@@ -51,6 +51,7 @@ function NoteItem({ note, activeNote, index, activeFolder, deleteNote, renameIte
 
   return (
     <ListItemComponent
+      to={`/description/${id}`}
       icon={<NoteIcon/>}
       handleDeleteItem={deleteNotes}
       handleRenameItem={renameNote}

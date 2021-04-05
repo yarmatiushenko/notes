@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 
 // material-ui
@@ -10,10 +11,12 @@ import IconButton from '@material-ui/core/IconButton'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import MenuIcon from '@material-ui/icons/Menu'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 // redux
 import { connect } from 'react-redux'
 import { createFolder, createNote, toggleDrawer } from '../../redux/reducer'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -25,11 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     width: 'calc(100% - 300px)',
-    marginLeft: 300,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    '@media only screen and (max-width: 800px)': {
+      width: '100%'
+    }
   },
   iconBtn: {
     '& svg': {
@@ -45,23 +50,29 @@ const useStyles = makeStyles((theme) => ({
 
 function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeFolder }) {
   const classes = useStyles()
+  const history = useHistory()
+  const isMobile = useMediaQuery('(max-width:800px)')
+  const isHomePath = history.location.pathname === '/'
 
-  const handleCreateNote = () => {
-    createNote(activeFolder)
-  }
+  const handleCreateNote = () => createNote(activeFolder)
 
   const actions = [
     {
       name: 'Menu',
       onClick: toggleDrawer,
       icon: <MenuIcon/>,
-      condition: foldersDrawer
+      condition: isMobile || foldersDrawer
+    },
+    {
+      name: 'Back',
+      onClick: () => history.goBack(),
+      icon: <KeyboardBackspaceIcon/>,
+      condition: !isMobile || isHomePath
     },
     {
       name: 'Add folder',
       onClick: createFolder,
       icon: <CreateNewFolderIcon/>,
-      condition: !foldersDrawer
     },
     {
       name: 'Add note',
@@ -102,6 +113,7 @@ function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeF
 
 Header.propTypes = {
   activeFolder: PropTypes.string,
+  createNote: PropTypes.func.isRequired,
   foldersDrawer: PropTypes.bool.isRequired,
   toggleDrawer: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired

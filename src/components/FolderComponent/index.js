@@ -20,13 +20,16 @@ const useStyles = makeStyles(() => ({
     padding: 10
   }
 }))
+
 const FolderComponent = ({ folders }) => {
   const classes = useStyles()
 
   return (
     <List className={classes.list}>
       {folders.length === 0 && (<StubComponent text="Please, add folder" icon={<CreateNewFolderIcon/>}/>)}
-      {folders.map(item => (<FolderItem key={item} id={item}/>))}
+      {folders.map(item => (<FolderItem key={item} id={item} to={`/${item}/notes`}/>))}
+
+
     </List>
   )
 }

@@ -27,17 +27,24 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function FolderItem({ folder, activeFolder, deleteItem, renameItem, setActiveItem }) {
+function FolderItem({ folder, activeFolder, deleteItem, renameItem, setActiveItem, to }) {
   const classes = useStyles()
   const { id, name } = folder
   const isSelected = activeFolder === id
 
-  const deleteFolder = () => deleteItem(id)
-  const renameFolder = (e) => renameItem(id, e.target.value)
+  const deleteFolder = (e) => {
+    e.stopPropagation()
+    deleteItem(id)
+  }
+  const renameFolder = (e) => {
+    e.stopPropagation()
+    renameItem(id, e.target.value)
+  }
   const setActiveFolder = () => setActiveItem(id, 'activeFolder')
 
   return (
     <ListItemComponent
+      to={to}
       icon={<FolderOpenIcon/>}
       handleDeleteItem={deleteFolder}
       handleRenameItem={renameFolder}
@@ -56,6 +63,7 @@ function FolderItem({ folder, activeFolder, deleteItem, renameItem, setActiveIte
 
 FolderItem.propTypes = {
   activeFolder: PropTypes.string,
+  to: PropTypes.string.isRequired,
   folder: PropTypes.object.isRequired,
   renameItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,

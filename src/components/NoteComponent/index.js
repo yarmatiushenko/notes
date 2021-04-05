@@ -16,9 +16,12 @@ import StubComponent from '../StubComponent'
 const useStyles = makeStyles(() => ({
   list: {
     padding: 10,
-    height: '100%',
     width: '400px',
-    backgroundColor: '#3C3C43'
+    backgroundColor: '#3C3C43',
+    '@media only screen and (max-width: 800px)': {
+      width: 'auto',
+      height: '100%'
+    }
   }
 }))
 
@@ -35,7 +38,7 @@ const NoteComponent = ({ folder = {} }) => {
 }
 
 NoteComponent.propTypes = {
-  folder: PropTypes.object.isRequired
+  folder: PropTypes.object
 }
 
 const mapStateToProps = (store) => {

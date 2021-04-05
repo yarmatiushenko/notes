@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+import PropTypes from 'prop-types'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    '& > div': {
+    '& > div, ul': {
       overflow: 'auto'
     },
   },
@@ -62,6 +63,10 @@ const NotesBody = ({ foldersDrawer }) => {
       </div>
     </>
   )
+}
+
+NotesBody.propTypes = {
+  foldersDrawer: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (store) => ({

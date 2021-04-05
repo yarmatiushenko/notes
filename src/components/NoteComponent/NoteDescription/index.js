@@ -12,8 +12,10 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
-    height: '100%',
-    padding: 10
+    padding: 10,
+    '@media only screen and (max-width: 800px)': {
+      height: '100%'
+    }
   },
   textArea: {
     display: 'block',
@@ -70,7 +72,7 @@ const NoteDescription = ({ activeNote, notes, changeDescription }) => {
 }
 
 NoteDescription.propTypes = {
-  notes: PropTypes.array.isRequired,
+  notes: PropTypes.object,
   activeNote: PropTypes.string,
   changeDescription: PropTypes.func.isRequired
 }
