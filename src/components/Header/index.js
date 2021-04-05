@@ -1,38 +1,67 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import NoteAddIcon from '@material-ui/icons/NoteAdd'
+import MenuIcon from '@material-ui/icons/Menu'
+
 // redux
 import { connect } from 'react-redux'
-import { createFolder, createNote } from '../../redux/reducer'
+import { createFolder, createNote, toggleDrawer } from '../../redux/reducer'
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    backgroundColor: '#202122',
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: 'calc(100% - 300px)',
+    marginLeft: 300,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
   iconBtn: {
     '& svg': {
       color: '#fff'
     }
+  },
+  disabled: {
+    '& svg': {
+      color: 'grey'
+    }
   }
 }))
 
-function Header({ createFolder, createNote, activeFolder }) {
+function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeFolder }) {
   const classes = useStyles()
 
   const handleCreateNote = () => {
-    console.log('click')
     createNote(activeFolder)
   }
+
   const actions = [
+    {
+      name: 'Menu',
+      onClick: toggleDrawer,
+      icon: <MenuIcon/>,
+      condition: foldersDrawer
+    },
     {
       name: 'Add folder',
       onClick: createFolder,
-      icon: <CreateNewFolderIcon/>
+      icon: <CreateNewFolderIcon/>,
+      condition: !foldersDrawer
     },
     {
       name: 'Add note',
@@ -43,19 +72,29 @@ function Header({ createFolder, createNote, activeFolder }) {
   ]
 
   return (
-    <AppBar className={classes.appBar}>
+    <AppBar
+      position="fixed"
+      className={clsx(classes.appBar, {
+        [classes.appBarShift]: foldersDrawer,
+      })}
+    >
       <Toolbar>
-        <Typography variant="h6" noWrap>Notes</Typography>
-        {actions.map(item => (
-          <IconButton
-            key={item.name}
-            disabled={item.disabled}
-            onClick={item.onClick}
-            className={classes.iconBtn}
-          >
-            {item.icon}
-          </IconButton>
-        ))}
+        {actions.map(item => {
+          if (item.condition) return false
+          return (
+            <IconButton
+              key={item.name}
+              disabled={item.disabled}
+              onClick={item.onClick}
+              classes={{
+                root: classes.iconBtn,
+                disabled: classes.disabled
+              }}
+            >
+              {item.icon}
+            </IconButton>
+          )
+        })}
       </Toolbar>
     </AppBar>
   )
@@ -63,11 +102,14 @@ function Header({ createFolder, createNote, activeFolder }) {
 
 Header.propTypes = {
   activeFolder: PropTypes.string,
+  foldersDrawer: PropTypes.bool.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
   createFolder: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (store) => ({
-  activeFolder: store.activeFolder
+  activeFolder: store.activeFolder,
+  foldersDrawer: store.ui.foldersDrawer
 })
 
-export default connect(mapStateToProps, { createFolder, createNote })(Header)
+export default connect(mapStateToProps, { createFolder, createNote, toggleDrawer })(Header)

@@ -17,12 +17,13 @@ const useStyles = makeStyles(() => ({
     marginTop: 10,
     borderRadius: 6,
     cursor: 'pointer',
-    border: '1px solid #000',
-    backgroundColor: '#fff'
+    backgroundColor: '#E6E6E6',
+    '&:hover': {
+      backgroundColor: '#fff !important'
+    }
   },
   selected: {
-    border: '1px solid transparent',
-    backgroundColor: '#cfe8fc !important'
+    backgroundColor: '#fff !important'
   }
 }))
 
