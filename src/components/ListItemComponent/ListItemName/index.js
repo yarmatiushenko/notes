@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
 import ListItemText from '@material-ui/core/ListItemText'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -22,11 +24,16 @@ const useStyles = makeStyles(() => ({
   },
   listItemSecondary: {
     fontSize: 12
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit !important'
   }
 }))
 
-function ListItemName({ isEdit, initialValue, onChange, onBlur, ...rest }) {
+function ListItemName({ isEdit, initialValue, onChange, to, ...rest }) {
   const classes = useStyles()
+  const isMobile = useMediaQuery('(max-width:800px)')
 
   if (isEdit) {
     return (
@@ -39,6 +46,14 @@ function ListItemName({ isEdit, initialValue, onChange, onBlur, ...rest }) {
     )
   }
 
+  if (isMobile) {
+    return (
+      <Link to={to} className={classes.link}>
+        <ListItemText classes={{ secondary: classes.listItemSecondary }} primary={initialValue} {...rest}/>
+      </Link>
+    )
+  }
+
   return (
     <ListItemText classes={{ secondary: classes.listItemSecondary }} primary={initialValue} {...rest}/>
   )
@@ -47,8 +62,8 @@ function ListItemName({ isEdit, initialValue, onChange, onBlur, ...rest }) {
 ListItemName.propTypes = {
   isEdit: PropTypes.bool.isRequired,
   initialValue: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired
 }
 
 export default ListItemName

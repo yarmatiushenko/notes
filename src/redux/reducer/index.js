@@ -11,6 +11,8 @@ const DELETE_NOTE = 'DELETE_NOTE'
 const CHANGE_DESCRIPTION = 'CHANGE_DESCRIPTION'
 const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM'
 
+const isMobile = window.innerWidth > 800
+
 // initial state
 const initialState = {
   activeFolder: '',
@@ -24,10 +26,11 @@ const initialState = {
     allIds: []
   },
   ui: {
-    foldersDrawer: true
+    foldersDrawer: isMobile
   }
 }
 
+// eslint-disable-next-line consistent-return
 export const notes = produce((draft, action) => {
   switch (action.type) {
     case CREATE_FOLDER:
@@ -43,6 +46,7 @@ export const notes = produce((draft, action) => {
 
     case SET_ACTIVE_ITEM:
       draft[action.entity] = action.id
+      if (action.entity === 'activeFolder') draft.activeNote = ''
       break
 
     case DELETE_NOTE:

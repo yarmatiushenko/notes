@@ -17,6 +17,14 @@ import ListItemName from './ListItemName'
 import { ClickAwayListener } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  nameContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   icon: {
     minWidth: 20,
     marginRight: 10,
@@ -32,14 +40,13 @@ const useStyles = makeStyles(() => ({
 }))
 
 const ListItemComponent = (props) => {
-  const { primaryText, icon, selected, listItemProps, handleEditItem,
+  const { primaryText, icon, selected, listItemProps,
     handleDeleteItem, handleRenameItem, setActiveItem, ...rest } = props
   const [isEdit, setEdit] = useState(false)
 
   const openEditMode = () => setEdit(true)
   const closeEditMode = () => setEdit(false)
   const classes = useStyles()
-  console.log('render')
   const actions = [
     {
       label: 'Rename',
@@ -69,27 +76,29 @@ const ListItemComponent = (props) => {
         onClick={setActiveItem}
         {...listItemProps}
       >
-        {icon && (<ListItemIcon className={classes.icon}>{icon}</ListItemIcon>)}
+        <div className={classes.nameContainer}>
+          {icon && (<ListItemIcon className={classes.icon}>{icon}</ListItemIcon>)}
 
-        <ListItemName
-          isEdit={isEdit}
-          initialValue={primaryText}
-          onBlur={handleEditItem}
-          onChange={handleRenameItem}
-          {...rest}
-        />
-
-        {actions.map(item => {
-          if (item.condition) return false
-          return (
-            <IconButton
-              key={item.label}
-              className={classes.iconBtn}
-              onClick={item.onClick}
-            >
-              {item.icon}
-            </IconButton>)
-        })}
+          <ListItemName
+            isEdit={isEdit}
+            initialValue={primaryText}
+            onChange={handleRenameItem}
+            {...rest}
+          />
+        </div>
+        <div className={classes.action}>
+          {actions.map(item => {
+            if (item.condition) return false
+            return (
+              <IconButton
+                key={item.label}
+                className={classes.iconBtn}
+                onClick={item.onClick}
+              >
+                {item.icon}
+              </IconButton>)
+          })}
+        </div>
       </ListItem>
     </ClickAwayListener>
   )
@@ -98,11 +107,9 @@ const ListItemComponent = (props) => {
 ListItemComponent.propTypes = {
   icon: PropTypes.object,
   listItemProps: PropTypes.object,
-  isEdit: PropTypes.bool.isRequired,
   selected: PropTypes.bool.isRequired,
   setActiveItem: PropTypes.func.isRequired,
   primaryText: PropTypes.string.isRequired,
-  handleEditItem: PropTypes.func.isRequired,
   handleRenameItem: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired
 }
