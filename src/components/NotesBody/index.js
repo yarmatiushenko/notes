@@ -1,21 +1,39 @@
 import React from 'react'
+import clsx from 'clsx'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
 
+// redux
+import { connect } from 'react-redux'
+import { toggleDrawer } from '../../redux/reducer'
+
 // components
-import FolderComponent from '../FolderComponent'
 import NoteComponent from '../NoteComponent'
 import NoteDescription from '../NoteComponent/NoteDescription'
+import FoldersDrawer from '../FoldersDrawer'
 
-const useStyles = makeStyles(() => ({
-  root: {
+const useStyles = makeStyles((theme) => ({
+  content: {
+    flexGrow: 1,
     display: 'flex',
     height: 'calc(100vh - 64px)',
     marginTop: 64,
+    marginLeft: -300,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
     '& > div': {
-      padding: 10
-    }
+      overflow: 'auto'
+    },
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   },
   folderList: {
     width: '250px',
@@ -29,22 +47,25 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const NotesBody = () => {
+const NotesBody = ({ foldersDrawer }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
-      <div className={classes.folderList}>
-        <FolderComponent/>
-      </div>
-      <div className={classes.notesList}>
+    <>
+      <FoldersDrawer/>
+      <div className={clsx(classes.content, {
+        [classes.contentShift]: foldersDrawer,
+      })}
+      >
         <NoteComponent/>
-      </div>
-      <div className={classes.notesDescription}>
         <NoteDescription/>
       </div>
-    </div>
+    </>
   )
 }
 
-export default NotesBody
+const mapStateToProps = (store) => ({
+  foldersDrawer: store.ui.foldersDrawer
+})
+
+export default connect(mapStateToProps, { toggleDrawer })(NotesBody)

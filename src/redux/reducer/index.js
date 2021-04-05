@@ -3,6 +3,7 @@ import uniqid from 'uniqid'
 
 // types
 const CREATE_FOLDER = 'CREATE_FOLDER'
+const TOGGLE_DRAWER = 'TOGGLE_DRAWER'
 const CREATE_NOTE = 'CREATE_NOTE'
 const DELETE_FOLDER = 'DELETE_FOLDER'
 const RENAME_ITEM = 'RENAME_ITEM'
@@ -21,6 +22,9 @@ const initialState = {
   notes: {
     byId: {},
     allIds: []
+  },
+  ui: {
+    foldersDrawer: true
   }
 }
 
@@ -75,6 +79,11 @@ export const notes = produce((draft, action) => {
     case CHANGE_DESCRIPTION:
       draft.notes.byId[action.id].description = action.value
       break
+
+    case TOGGLE_DRAWER:
+      draft.ui.foldersDrawer = !draft.ui.foldersDrawer
+      break
+
     default:
       return draft
   }
@@ -147,5 +156,11 @@ export const setActiveItem = (id, entity) => {
     type: SET_ACTIVE_ITEM,
     id,
     entity,
+  }
+}
+
+export const toggleDrawer = () => {
+  return {
+    type: TOGGLE_DRAWER
   }
 }

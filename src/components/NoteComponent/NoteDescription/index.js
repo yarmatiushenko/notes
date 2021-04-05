@@ -9,35 +9,40 @@ import { changeDescription } from '../../../redux/reducer'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-// components
-import StubComponent from '../../StubComponent'
-
 const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    padding: 10
   },
   textArea: {
     display: 'block',
     height: '100%',
     width: '100%',
     outline: 'none',
-    border: 'none'
+    border: 'none',
+    '&:placeholder': {
+      fontSize: 16,
+      color: '#95A5A6'
+    }
+  },
+  description: {
+    fontSize: 16,
+    whiteSpace: 'pre-wrap',
+    color: '#95A5A6'
   }
 }))
 
 const NoteDescription = ({ activeNote, notes, changeDescription }) => {
   const [edit, setEdit] = useState(false)
-  const note = notes[activeNote]
+  const note = notes[activeNote] || {}
   const classes = useStyles()
 
-  if (!activeNote) {
-    return (
-      <StubComponent text="Please, select note" />
-    )
+  const handleEditNote = () => {
+    if (!activeNote) return false
+    return setEdit(true)
   }
 
-  const handleEditNote = () => setEdit(true)
   const closeEditMode = () => setEdit(false)
   const changeNoteDescription = (e) => changeDescription(note.id, e.target.value)
 
@@ -50,7 +55,7 @@ const NoteDescription = ({ activeNote, notes, changeDescription }) => {
     />
   )
 
-  const span = (<Typography>{note.description || 'Add note description'}</Typography>)
+  const span = (<Typography className={classes.description}>{note.description || 'Add note description'}</Typography>)
   const content = edit ? textArea : span
 
   return (

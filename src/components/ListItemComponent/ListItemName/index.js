@@ -19,6 +19,9 @@ const useStyles = makeStyles(() => ({
     outline: 'none',
     background: '#fff',
     pointerEvents: 'auto'
+  },
+  listItemSecondary: {
+    fontSize: 12
   }
 }))
 
@@ -37,7 +40,7 @@ function ListItemName({ isEdit, initialValue, onChange, onBlur, ...rest }) {
   }
 
   return (
-    <ListItemText primary={initialValue} {...rest}/>
+    <ListItemText classes={{ secondary: classes.listItemSecondary }} primary={initialValue} {...rest}/>
   )
 }
 

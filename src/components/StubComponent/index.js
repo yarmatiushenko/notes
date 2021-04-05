@@ -19,13 +19,13 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
     transform: 'translate(-50%, -50%)',
     '& svg': {
-      color: '#3f51b5',
+      color: '#fff',
       width: 50,
       height: 50
     },
     '& p, span': {
       fontSize: 20,
-      color: '#3f51b5',
+      color: '#fff',
     }
   }
 }))

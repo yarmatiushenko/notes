@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 // redux
 import { store } from '../redux/store'
@@ -14,15 +14,17 @@ import NotesBody from './NotesBody'
 
 const theme = createMuiTheme()
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
+const App = () => {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <div style={{ display: 'flex' }}>
           <Header/>
           <NotesBody/>
-        </ThemeProvider>
-      </Provider>
-    )
-  }
+        </div>
+      </ThemeProvider>
+    </Provider>
+  )
 }
+
+export default App

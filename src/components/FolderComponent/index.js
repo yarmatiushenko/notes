@@ -5,24 +5,29 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // material-ui
+import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
 
 // component
 import FolderItem from './FolderItem/Index'
 import StubComponent from '../StubComponent'
 
-const FolderComponent = ({ folders }) => {
-  // stub text
-  if (folders.length === 0) {
-    return (
-      <StubComponent text="Please, add folder" icon={<CreateNewFolderIcon/>}/>
-    )
+const useStyles = makeStyles(() => ({
+  list: {
+    height: '100%',
+    backgroundColor: '#202122',
+    padding: 10
   }
+}))
+const FolderComponent = ({ folders }) => {
+  const classes = useStyles()
 
   return (
-    <>
+    <List className={classes.list}>
+      {folders.length === 0 && (<StubComponent text="Please, add folder" icon={<CreateNewFolderIcon/>}/>)}
       {folders.map(item => (<FolderItem key={item} id={item}/>))}
-    </>
+    </List>
   )
 }
 
