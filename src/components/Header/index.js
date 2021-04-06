@@ -75,7 +75,7 @@ function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeF
       name: 'Add folder',
       onClick: createFolder,
       icon: <CreateNewFolderIcon/>,
-      condition: !isHomePath
+      condition: isMobile && !isHomePath
     },
     {
       name: 'Add note',
