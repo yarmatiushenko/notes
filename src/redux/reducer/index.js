@@ -1,5 +1,6 @@
 import produce from 'immer'
 import uniqid from 'uniqid'
+import { EditorState } from 'draft-js'
 
 // types
 const CREATE_FOLDER = 'CREATE_FOLDER'
@@ -110,7 +111,7 @@ export const createFolder = () => {
 export const createNote = (folderId) => {
   const newNote = {
     id: uniqid(),
-    description: '',
+    description: EditorState.createEmpty(),
     name: 'New Note',
     date: new Date().toLocaleString(),
   }

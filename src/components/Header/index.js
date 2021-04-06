@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 
 // material-ui
@@ -51,9 +51,11 @@ const useStyles = makeStyles((theme) => ({
 function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeFolder }) {
   const classes = useStyles()
   const history = useHistory()
+  const location = useLocation()
   const isMobile = useMediaQuery('(max-width:800px)')
-  const isHomePath = history.location.pathname === '/'
+  const isHomePath = location.pathname === '/'
 
+  console.log(location)
   const handleCreateNote = () => createNote(activeFolder)
 
   const actions = [
@@ -73,12 +75,14 @@ function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeF
       name: 'Add folder',
       onClick: createFolder,
       icon: <CreateNewFolderIcon/>,
+      condition: !isHomePath
     },
     {
       name: 'Add note',
       onClick: handleCreateNote,
       disabled: !activeFolder,
-      icon: <NoteAddIcon/>
+      icon: <NoteAddIcon/>,
+      condition: isMobile && isHomePath
     }
   ]
 

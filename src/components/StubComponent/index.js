@@ -10,7 +10,8 @@ const useStyles = makeStyles(() => ({
   root: {
     position: 'relative',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    zIndex: 100,
   },
   container: {
     position: 'absolute',
@@ -30,11 +31,11 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const StubComponent = ({ icon, text, containerClassName }) => {
+const StubComponent = ({ icon, text, containerClassName, onClick }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={onClick}>
       <div className={clsx(classes.container, containerClassName)}>
         {icon}
         <Typography>{text}</Typography>
@@ -46,6 +47,7 @@ const StubComponent = ({ icon, text, containerClassName }) => {
 StubComponent.propTypes = {
   icon: PropTypes.object,
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   containerClassName: PropTypes.object
 }
 
