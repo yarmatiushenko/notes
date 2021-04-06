@@ -23,7 +23,14 @@ const useStyles = makeStyles(() => ({
     pointerEvents: 'auto'
   },
   listItemSecondary: {
-    fontSize: 12
+    fontSize: 12,
+
+  },
+  listItemPrimary: {
+    maxWidth: 140,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
   link: {
     textDecoration: 'none',
@@ -38,7 +45,6 @@ function ListItemName({ isEdit, initialValue, onChange, to, ...rest }) {
   if (isEdit) {
     return (
       <input
-        onBlur={onBlur}
         value={initialValue}
         className={classes.input}
         onChange={onChange}
@@ -55,7 +61,14 @@ function ListItemName({ isEdit, initialValue, onChange, to, ...rest }) {
   }
 
   return (
-    <ListItemText classes={{ secondary: classes.listItemSecondary }} primary={initialValue} {...rest}/>
+    <ListItemText
+      classes={{
+        primary: classes.listItemPrimary,
+        secondary: classes.listItemSecondary
+      }}
+      primary={initialValue}
+      {...rest}
+    />
   )
 }
 

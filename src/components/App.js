@@ -26,8 +26,7 @@ const App = () => {
         <Router >
           <div style={{ display: 'flex' }}>
             <Header/>
-            {!isMobile && <NotesBody/>}
-            {isMobile && <MobileLayout/>}
+            {isMobile ? <MobileLayout/> : <NotesBody/>}
           </div>
         </Router>
       </ThemeProvider>
