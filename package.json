@@ -1,7 +1,7 @@
 {
   "name": "notes",
   "version": "1.0.0",
-  "homepage": "http://yarmatiushenko.github.io/notes",
+  "homepage": "https://yarmatiushenko.github.io/notes/",
   "description": "",
   "main": "index.js",
   "scripts": {
