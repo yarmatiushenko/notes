@@ -36,6 +36,7 @@ function FolderItem({ folder, activeFolder, deleteItem, renameItem, setActiveIte
     e.stopPropagation()
     deleteItem(id)
   }
+
   const renameFolder = (e) => {
     e.stopPropagation()
     renameItem(id, e.target.value)

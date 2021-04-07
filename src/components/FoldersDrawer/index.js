@@ -18,12 +18,12 @@ import { toggleDrawer } from '../../redux/reducer'
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: 300,
-    backgroundColor: '#202122',
     flexShrink: 0,
+    backgroundColor: '#202122'
   },
   drawerPaper: {
-    backgroundColor: '#202122',
     width: 300,
+    backgroundColor: '#202122'
   },
   drawerHeader: {
     display: 'flex',
@@ -45,12 +45,12 @@ const FoldersDrawer = ({ foldersDrawer, toggleDrawer }) => {
   return (
     <Drawer
       className={classes.drawer}
+      open={foldersDrawer}
       variant="persistent"
       anchor="left"
       classes={{
         paper: classes.drawerPaper,
       }}
-      open={foldersDrawer}
     >
       <div className={classes.drawerHeader}>
         <Typography variant="h6">Notes</Typography>
