@@ -5,6 +5,7 @@ import clsx from 'clsx'
 
 // material-ui
 import { makeStyles } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -16,7 +17,6 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 // redux
 import { connect } from 'react-redux'
 import { createFolder, createNote, toggleDrawer } from '../../redux/reducer'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -53,9 +53,9 @@ function Header({ createFolder, createNote, toggleDrawer, foldersDrawer, activeF
   const history = useHistory()
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width:800px)')
-  const isHomePath = location.pathname === '/'
+  const mainPath = ['/', '/notes/']
+  const isHomePath = mainPath.includes(location.pathname)
 
-  console.log(location)
   const handleCreateNote = () => createNote(activeFolder)
 
   const actions = [

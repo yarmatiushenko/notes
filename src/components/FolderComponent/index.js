@@ -16,8 +16,8 @@ import StubComponent from '../StubComponent'
 const useStyles = makeStyles(() => ({
   list: {
     height: '100%',
-    backgroundColor: '#202122',
-    padding: 10
+    padding: 10,
+    backgroundColor: '#202122'
   }
 }))
 
@@ -28,8 +28,6 @@ const FolderComponent = ({ folders }) => {
     <List className={classes.list}>
       {folders.length === 0 && (<StubComponent text="Please, add folder" icon={<CreateNewFolderIcon/>}/>)}
       {folders.map(item => (<FolderItem key={item} id={item} to={`/${item}/notes`}/>))}
-
-
     </List>
   )
 }
